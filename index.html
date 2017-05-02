@@ -7,12 +7,11 @@
 <body>
     <h1>Pageify</h1>
     <h2>Enter list of books here:</h2>
-    <label for="input">Input field:</label>
-    <textarea id="input" style="height: 80%" rows="20" cols="40"></textarea>
-    <button onclick="parse();">Parse</button>
-    <label for="output">Output field:</label>
-    <textarea id="output" rows="20" cols="40" placeholder="Click parse..."></textarea>
-    <a href="https://www.googleapis.com/books/v1/volumes?q=harry+potter&callback=handleResponse">test</a>
+    <label for="input">Input field:</label><br/>
+    <textarea id="input" style="height: 80%" rows="20" cols="120"></textarea>
+    <br/><button onclick="parse();">Parse</button><br/>
+    <label for="output">Output field:</label><br/>
+    <textarea id="output" rows="20" cols="120" placeholder="Click parse..."></textarea>
 </body>
 </html>
 
@@ -25,9 +24,16 @@
         for(var i=0;i<lines.length;i++){
 //            output.value = output.value + "line " + i + " - value: "+lines[i]+"\n";
 //            var object = JSON.parse(httpGet(url));
-            var object = JSON.parse(httpGet(url+lines[i]+'&maxResults=1'));
-//            output.value = JSON.stringify(object);
-            output.value = output.value + JSON.stringify(object.items[0].volumeInfo.title)+'\n';
+            var book = encodeURIComponent(lines[i].trim());
+            var get = httpGet(url+book+'&maxResults=1&key=AIzaSyDhQidr5LzqVnEjCSZYydS_F48kiXFe9hw');
+            if (get!==null){
+                var object = JSON.parse(get);
+                output.value = output.value + ' ' + JSON.stringify(object.items[0].volumeInfo.pageCount)+' pages - ';
+                output.value = output.value + JSON.stringify(object.items[0].volumeInfo.title);
+                output.value = output.value + ' by ' + JSON.stringify(object.items[0].volumeInfo.authors);
+                output.value = output.value + '\n';
+            }else{output.value=output.value + " not found\n"}
+
         }
     }
 </script>
