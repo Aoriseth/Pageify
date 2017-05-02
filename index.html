@@ -12,6 +12,7 @@
     <button onclick="parse();">Parse</button>
     <label for="output">Output field:</label>
     <textarea id="output" rows="20" cols="40" placeholder="Click parse..."></textarea>
+    <a href="https://www.googleapis.com/books/v1/volumes?q=harry+potter&callback=handleResponse">test</a>
 </body>
 </html>
 
@@ -22,9 +23,20 @@
         output.value = "";
         for(var i=0;i<lines.length;i++){
             output.value = output.value + "line " + i + " - value: "+lines[i]+"\n";
+            var object = don();
+
         }
     }
-    function test() {
-        alert("test");
+</script>
+<script>
+    function don() {
+        var url = "https://www.googleapis.com/books/v1/volumes?q=harry potter 1";
+        fetch(url).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            console.log(data);
+        }).catch(function() {
+            console.log("Booo");
+        });
     }
 </script>
