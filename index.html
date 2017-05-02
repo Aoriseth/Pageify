@@ -8,9 +8,23 @@
     <h1>Pageify</h1>
     <h2>Enter list of books here:</h2>
     <label for="input">Input field:</label>
-    <textarea id="input" style="height: 80%" rows="20" cols="40"> </textarea>
-    <button onclick="document.getElementById('output').innerHTML='you clicked on parse'">Parse</button>
+    <textarea id="input" style="height: 80%" rows="20" cols="40"></textarea>
+    <button onclick="parse();">Parse</button>
     <label for="output">Output field:</label>
     <textarea id="output" rows="20" cols="40" placeholder="Click parse..."></textarea>
 </body>
 </html>
+
+<script>
+    function parse() {
+        var output = document.getElementById("output");
+        var lines = document.getElementById("input").value.split('\n');
+        output.value = "";
+        for(var i=0;i<lines.length;i++){
+            output.value = output.value + "line " + i + " - value: "+lines[i]+"\n";
+        }
+    }
+    function test() {
+        alert("test");
+    }
+</script>
