@@ -20,23 +20,23 @@
     function parse() {
         var output = document.getElementById("output");
         var lines = document.getElementById("input").value.split('\n');
+        var url = "https://www.googleapis.com/books/v1/volumes?q=";
         output.value = "";
         for(var i=0;i<lines.length;i++){
-            output.value = output.value + "line " + i + " - value: "+lines[i]+"\n";
-            var object = don();
-
+//            output.value = output.value + "line " + i + " - value: "+lines[i]+"\n";
+//            var object = JSON.parse(httpGet(url));
+            var object = JSON.parse(httpGet(url+lines[i]+'&maxResults=1'));
+//            output.value = JSON.stringify(object);
+            output.value = output.value + JSON.stringify(object.items[0].volumeInfo.title)+'\n';
         }
     }
 </script>
 <script>
-    function don() {
-        var url = "https://www.googleapis.com/books/v1/volumes?q=harry potter 1";
-        fetch(url).then(function(response) {
-            return response.json();
-        }).then(function(data) {
-            console.log(data);
-        }).catch(function() {
-            console.log("Booo");
-        });
+    function httpGet(url)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", url, false ); // false for synchronous request
+        xmlHttp.send( null );
+        return xmlHttp.responseText;
     }
 </script>
